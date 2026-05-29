@@ -1,6 +1,17 @@
 {
   "name": "Preceptor's Primer",
 
+  // TODO — revisit before next term: do students actually get the prebuild?
+  // Codespaces prebuilds ARE enabled on PPBDS/codespace-starter (Settings →
+  // Codespaces), which makes launches FROM THIS REPO fast. But a prebuild
+  // attaches to this repo only. If students get their own copy via "Use
+  // this template" or GitHub Classroom, those are fresh repos with NO
+  // prebuild — their first launch builds on-demand (slow). Need to decide
+  // the distribution model: (a) students launch Codespaces directly from
+  // codespace-starter → they benefit from the prebuild; or (b) students
+  // work in a copy → they don't, and we'd need another plan (prebuilds on
+  // the assignment repos, or just accept the cold first start).
+
   // PPBDS student image, pinned to v0.2.1. Bumping is a deliberate
   // edit to this line — never use `:latest` in student-facing config,
   // since it would float silently with every push to PPBDS/devcontainers.
