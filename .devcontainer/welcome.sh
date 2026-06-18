@@ -40,6 +40,23 @@ if command -v node >/dev/null 2>&1 && ! grep -qs 'workspace.trust.enabled' "$use
   ' "$user_settings"
 fi
 
+# Give students a short terminal prompt: just the current folder name + "$",
+# e.g. "my-class-work $". The default devcontainers/Codespaces prompt is long
+# ("@user ➜ /workspaces/full/path (branch) $") — too much for beginners. It
+# rebuilds PS1 on every render via PROMPT_COMMAND, so we override BOTH (clear
+# PROMPT_COMMAND, set PS1) at the END of ~/.bashrc, where last-word-wins. We
+# keep the folder name on purpose: it reinforces "which repo am I in?" — the
+# same orientation make_repo's auto-cd is about. Applies to new terminals
+# (bashrc runs at shell start). Idempotent via the sentinel.
+if ! grep -qF 'codespace-starter:short-prompt' "$HOME/.bashrc" 2>/dev/null; then
+  cat >> "$HOME/.bashrc" <<'BASHRC'
+
+# codespace-starter:short-prompt — short prompt for beginners (folder name + $).
+PROMPT_COMMAND=''
+PS1='\W \$ '
+BASHRC
+fi
+
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"   # codespace-starter/.devcontainer
 guide="$here/STUDENT_WORKFLOW.md"
 marker="$HOME/.student_repo"
