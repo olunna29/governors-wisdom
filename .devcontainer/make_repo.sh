@@ -57,7 +57,7 @@ elif gh repo view "$repo" >/dev/null 2>&1; then
   echo "→ '$repo' already exists on GitHub — cloning it."
   gh repo clone "$repo" "$repo"
 else
-  gh repo create "$repo" --private --clone
+  gh repo create "$repo" --public --clone
 fi
 
 # 4b. Give the new repo the launchpad's VS Code settings. The devcontainer
