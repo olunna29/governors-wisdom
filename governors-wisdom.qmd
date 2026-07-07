@@ -80,11 +80,46 @@ governors |>
 
 Create a tibble, called `x`, which keeps only close elections (`win_margin` within 5 points) after 1945 and adds a variable `election_result` recording whether the candidate won or lost. How many candidates remain? Compare the average `lived_after`, and the average `election_age`, of winners and losers.
 
+```{r}
+#| label: close-elections-subset
+#| message: false
+
+x <- governors |> 
+  filter(abs(win_margin) <= 5, year > 1945) |> 
+  mutate(election_result = if_else(outcome == "Win", "won", "lost"))
+
+x |> 
+  group_by(election_result) |> 
+  summarize(
+    count = n(),
+    avg_lived_after = mean(lived_after, na.rm = TRUE),
+    avg_election_age = mean(election_age, na.rm = TRUE)
+  )
+```
+
+There are **254** candidates remaining in the subset. On average, winners lived **29.6** years after their election (with an average election age of **51.0** years), whereas losers lived **27.2** years after their election (with an average election age of **51.4** years).
 
 
 Using `x`, create a plot that shows the relationship between `lived_after` and `election_age`.
 
+```{r}
+#| label: lived-after-vs-age
+#| message: false
 
+x |> 
+  ggplot(aes(x = election_age, y = lived_after, color = election_result)) +
+  geom_point(alpha = 0.7, size = 2) +
+  geom_smooth(method = "lm", se = FALSE, formula = y ~ x) +
+  labs(
+    title = "Life Expectancy Post-Election vs. Age at Election",
+    subtitle = "Close Gubernatorial Elections after 1945",
+    x = "Age at Election (years)",
+    y = "Years Lived After Election",
+    color = "Election Result"
+  ) +
+  scale_color_manual(values = c("won" = "dodgerblue4", "lost" = "firebrick")) +
+  theme_minimal()
+```
 
 ------------------------------------------------------------------------
 
@@ -94,29 +129,29 @@ Using `x`, create a plot that shows the relationship between `lived_after` and `
 
 Describe the key components of a Population Table for your scenario.
 
-
+The Population Table would have the data from the Preceptors Tables along with the data we actually have.
 
 ### Assumptions
 
 Why did we restrict our data to close elections?
 
-
+So things remain unconfounded. The treatment of winning or losing is applied essentially at random.
 
 Counter-example to the assumption of validity:
 
-
+If the preceptors table is regarding senate elections but our data is for governer elections. Winning a senator election has a different meaning than winning a governer election. 
 
 Counter-example to the assumption of stability:
 
-
+Holding office in earlier years could have a very different affect on life expectancy than the present.
 
 Counter-example to the assumption of representativeness:
 
-
+If there's a gender imbalance in the past that isn't very representative of the future
 
 Counter-example to the assumption of unconfoundedness:
 
-
+None because our question is predictive.
 
 ### Probability Family and Link Function
 

@@ -116,7 +116,26 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <p>Create a tibble, called <code>x</code>, which keeps only close elections (<code>win_margin</code> within 5 points) after 1945 and adds a variable <code>election_result</code> recording whether the candidate won or lost. How many candidates remain? Compare the average <code>lived_after</code>, and the average <code>election_age</code>, of winners and losers.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  election_result count avg_lived_after avg_election_age
+  &lt;chr&gt;           &lt;int&gt;           &lt;dbl&gt;            &lt;dbl&gt;
+1 lost              118            27.2             51.4
+2 won               136            29.6             51.0</code></pre>
+</div>
+</div>
+<p>There are <strong>254</strong> candidates remaining in the subset. On average, winners lived <strong>29.6</strong> years after their election (with an average election age of <strong>51.0</strong> years), whereas losers lived <strong>27.2</strong> years after their election (with an average election age of <strong>51.4</strong> years).</p>
 <p>Using <code>x</code>, create a plot that shows the relationship between <code>lived_after</code> and <code>election_age</code>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="governors-wisdom_files/figure-html/lived-after-vs-age-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <hr>
 </section>
 </section>
